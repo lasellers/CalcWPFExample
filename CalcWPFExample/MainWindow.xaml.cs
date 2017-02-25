@@ -138,7 +138,7 @@ namespace CalcWPFExample
                     string summary = this.sum.ToString();
 
                     var row = new CalcResultsFormat()
-                    { Operation = "-", Value = this.textBox1.Text, Summary = summary };
+                    { Operation = "+", Value = this.textBox1.Text, Summary = summary };
                     this.listView1.Items.Add(row);
                 }
             }
