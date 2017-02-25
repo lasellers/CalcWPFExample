@@ -5,38 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalcWPFExample"
         mc:Ignorable="d"
-        Title="MainWindow" Height="530" Width="450"
+        Title="Calc WPF Example" Height="530" Width="450"
+        Background="WhiteSmoke"
         Loaded="MainWindow_Loaded"
         Unloaded="MainWindow_Unloaded">
+    
+    <Window.Resources>
+        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style TargetType="{x:Type Control}" x:Key="listStyle">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource listStyle}"></Style>
+    </Window.Resources>
+    
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="269*"/>
             <ColumnDefinition Width="248*"/>
         </Grid.ColumnDefinitions>
+
         <Button x:Name="button1" Click="button1_Click" Content="1" HorizontalAlignment="Left" Margin="55,239,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
-        <Button x:Name="button2" Click="button2_Click" Content="2" HorizontalAlignment="Left" Margin="198,239,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
-        <Button x:Name="button3"  Click="button3_Click" Content="3" HorizontalAlignment="Left" Margin="79,239,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.Column="1"/>
+        <Button x:Name="button2" Click="button2_Click" Content="2" HorizontalAlignment="Left" Margin="182,239,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
+        <Button x:Name="button3"  Click="button3_Click" Content="3" HorizontalAlignment="Left" Margin="79,239,0,0" 
+          VerticalAlignment="Top" Width="75"
+          Height="32" Grid.Column="1"/>
         <Button x:Name="button4" Click="button4_Click" Content="4" HorizontalAlignment="Left" Margin="55,296,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
-        <Button x:Name="button5" Click="button5_Click" Content="5" HorizontalAlignment="Left" Margin="198,296,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
+        <Button x:Name="button5" Click="button5_Click" Content="5" HorizontalAlignment="Left" Margin="182,296,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
         <Button x:Name="button6" Click="button6_Click" Content="6" HorizontalAlignment="Left" Margin="79,296,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.Column="1"/>
         <Button x:Name="button7" Click="button7_Click" Content="7" HorizontalAlignment="Left" Margin="55,352,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
-        <Button x:Name="button8" Click="button8_Click" Content="8" HorizontalAlignment="Left" Margin="198,352,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
+        <Button x:Name="button8" Click="button8_Click" Content="8" HorizontalAlignment="Left" Margin="182,352,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
         <Button x:Name="button9" Click="button9_Click" Content="9" HorizontalAlignment="Left" Margin="79,352,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.Column="1"/>
         <Button x:Name="button0" Click="button0_Click" Content="0" HorizontalAlignment="Left" Margin="55,408,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
         <Button x:Name="buttonMinus" Click="buttonMinus_Click" Content="-" HorizontalAlignment="Left" Margin="55,457,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
-        <Button x:Name="buttonPlus" Click="buttonPlus_Click" Content="+" HorizontalAlignment="Left" Margin="198,457,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
+        <Button x:Name="buttonPlus" Click="buttonPlus_Click" Content="+" HorizontalAlignment="Left" Margin="182,457,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.ColumnSpan="2"/>
         <Button x:Name="buttonClear" Click="buttonClear_Click" Content="Clear" HorizontalAlignment="Left" Margin="79,457,0,0" VerticalAlignment="Top" Width="75" Height="32" Grid.Column="1"/>
         <TextBox x:Name="textBox1" HorizontalAlignment="Left" Margin="55,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" Height="32" Grid.ColumnSpan="2"/>
-        <ListView x:Name="listView1" HorizontalAlignment="Left" Height="149" Margin="55,26,0,0" VerticalAlignment="Top" Width="329" Grid.ColumnSpan="2">
+        <ListView x:Name="listView1" HorizontalAlignment="Left" Height="149" Margin="55,32,0,0" VerticalAlignment="Top" Width="329" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.View>
                 <GridView>
 
                     <GridViewColumn Header="Operation" DisplayMemberBinding="{Binding Operation}" Width="80"/>
-                    
+
                     <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" Width="100"/>
-                    
+
                     <GridViewColumn Header="Summary" DisplayMemberBinding="{Binding Summary}" Width="149"/>
-                
+
                 </GridView>
             </ListView.View>
         </ListView>

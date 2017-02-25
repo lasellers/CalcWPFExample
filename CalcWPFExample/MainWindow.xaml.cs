@@ -31,17 +31,7 @@ namespace CalcWPFExample
         public MainWindow()
         {
             InitializeComponent();
-
-            // using System.Windows.Media;
-            //textBox1.Background = Brushes.Blue;
-            //textBox1.Foreground = Brushes.Yellow;
-
-//            MainWindow.BackgroundProperty = Brushes.White;
-//            textBox1.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xE0, 0xE0, 0xE0));
-  //          textBox1.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0, 0));
-    //        textBox1.Background = System.Windows.SystemColors.MenuHighlightBrush;
         }
-
 
         public void MainWindow_Loaded(object sender, EventArgs e)
         {
@@ -52,13 +42,6 @@ namespace CalcWPFExample
         {
             saveMemory();
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-    
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
@@ -110,26 +93,36 @@ namespace CalcWPFExample
             this.textBox1.Text += "0";
         }
 
+        private void giveCleanFocusForInput()
+        {
+            this.textBox1.Text = "";
+            this.textBox1.Focus();
+
+            this.listView1.Items.MoveCurrentToLast();
+            this.listView1.ScrollIntoView(this.listView1.Items.CurrentItem);
+        }
+
         private void buttonMinus_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int num = Int32.Parse(this.textBox1.Text.ToString());
-                this.sum -= num;
-                string summary = this.sum.ToString();
-               // var row = new { Operation = "-", Value = this.textBox1.Text, Summary = summary };
-                var row = new CalcResultsFormat()
-                { Operation = "-", Value = this.textBox1.Text, Summary = summary };
+                if (CalcValidate.ValidateValueIsNumeric(this.textBox1.Text))
+                {
+                    int num = Int32.Parse(this.textBox1.Text.ToString());
+                    this.sum -= num;
+                    string summary = this.sum.ToString();
+                    var row = new CalcResultsFormat()
+                    { Operation = "-", Value = this.textBox1.Text, Summary = summary };
 
-                this.listView1.Items.Add(row);
+                    this.listView1.Items.Add(row);
+                }
             }
             catch (FormatException ev)
             {
                 Debug.WriteLine("FormatException " + ev.Message);
             }
 
-            this.textBox1.Text = "";
-            this.textBox1.Focus();
+            this.giveCleanFocusForInput();
 
             this.saveMemory();
         }
@@ -138,14 +131,16 @@ namespace CalcWPFExample
         {
             try
             {
-                int num = Int32.Parse(this.textBox1.Text.ToString());
-                this.sum += num;
-                string summary = this.sum.ToString();
+                if (CalcValidate.ValidateValueIsNumeric(this.textBox1.Text))
+                {
+                    int num = Int32.Parse(this.textBox1.Text.ToString());
+                    this.sum += num;
+                    string summary = this.sum.ToString();
 
-             //   var row = new { Operation = "-", Value = this.textBox1.Text, Summary = summary };
-                var row = new CalcResultsFormat()
-                { Operation = "-", Value = this.textBox1.Text, Summary = summary };
-                this.listView1.Items.Add(row);
+                    var row = new CalcResultsFormat()
+                    { Operation = "-", Value = this.textBox1.Text, Summary = summary };
+                    this.listView1.Items.Add(row);
+                }
             }
             catch (FormatException ev)
             {
@@ -156,8 +151,7 @@ namespace CalcWPFExample
                 Debug.WriteLine("OverflowException " + ev.Message);
             }
 
-            this.textBox1.Text = "";
-            this.textBox1.Focus();
+            this.giveCleanFocusForInput();
 
             this.saveMemory();
         }
@@ -167,39 +161,9 @@ namespace CalcWPFExample
             this.clearMemory();
         }
 
-        private void buttonEqual_Click(object sender, EventArgs e)
-        {
-          //  this.buttonPlus_Click(sender, e);
-        }
-
         private void textBox_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.sum = 0;
-            this.textBox1.Text = "";
-
-            this.clearListView();
-
-            this.textBox1.Focus();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.clearMemory();
         }
 
         /// <summary>
@@ -272,7 +236,6 @@ namespace CalcWPFExample
 
                     try
                     {
-                      //  var row = new { Operation = els[0], Value = els[1], Summary = els[2] };
                         var row = new CalcResultsFormat()
                         { Operation = els[0], Value = els[1], Summary = els[2] };
                         this.listView1.Items.Add(row);
@@ -288,9 +251,9 @@ namespace CalcWPFExample
             {
                 // catch XmlSerializer
                 Debug.WriteLine("InvalidOperationException " + ex.Message);
-
             }
 
+            this.giveCleanFocusForInput();
         }
 
         /// <summary>
@@ -305,13 +268,6 @@ namespace CalcWPFExample
             memory.history = new List<string>();
             foreach (CalcResultsFormat item in listView1.Items)
             {
-             //   CalcResultsFormat r = (CalcResultsFormat)item;
-               // Debug.WriteLine(item.Operation);
-              //  Debug.WriteLine(item.Value);
-              //  Debug.WriteLine(item.Summary);
-                //  item.
-                //    new { Operation = "-", Value = this.textBox1.Text, Summary = summary };
-               // Debug.Assert(item != null);
                 string line = item.Operation + "," + item.Value + "," + item.Summary;
                 memory.history.Add(line);
             }
